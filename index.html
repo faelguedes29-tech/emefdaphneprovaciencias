@@ -4,9 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Avaliação Digital de Ciências - 5º Ano</title>
-    <!-- Tailwind CSS para Estilização de Alta Qualidade -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- jsPDF para Geração do Relatório em PDF -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <style>
         .option-card { cursor: pointer; transition: all 0.2s; border: 2px solid #e5e7eb; border-radius: 12px; padding: 1.2rem; font-weight: 600; font-size: 1.05rem; display: flex; align-items: center; }
@@ -23,7 +21,6 @@
 <body class="bg-slate-100 min-h-screen p-4 font-sans text-gray-900">
     <div class="max-w-4xl mx-auto bg-white rounded-2xl shadow-2xl overflow-hidden border border-gray-200">
         
-        <!-- CABEÇALHO ESCOLAR IDENTÊNTICO -->
         <div class="p-4 border-b-2 border-blue-600 flex items-center justify-between bg-white">
             <img src="brasao.png" class="h-16 w-16 object-contain" onerror="this.src='https://via.placeholder.com/60/3b82f6/ffffff?text=BRASÃO'">
             <div class="text-center flex-1 mx-4">
@@ -33,7 +30,6 @@
             <img src="logo.png" class="h-16 w-16 object-contain" onerror="this.src='https://via.placeholder.com/60/3b82f6/ffffff?text=LOGO'">
         </div>
 
-        <!-- TELA DE IDENTIFICAÇÃO DO ALUNO -->
         <div id="intro-screen" class="p-12 text-center max-w-xl mx-auto">
             <h1 class="text-3xl font-black mb-2 text-blue-900 uppercase">Avaliação Digital</h1>
             <p class="text-gray-500 mb-8 font-medium">Componente Curricular: Ciências (5º Ano)</p>
@@ -44,15 +40,13 @@
                 </div>
                 <div class="text-left">
                     <label class="block text-sm font-bold text-gray-700 mb-1">Turma / Ano:</label>
-                    <input type="text" id="student-class" placeholder="Ex: 5º Ano A" class="w-full p-4 border-2 rounded-xl outline-none focus:border-blue-500 transition-all font-semibold">
+                    <input type="text" id="student-class" placeholder="Ex: 5º Ano B" class="w-full p-4 border-2 rounded-xl outline-none focus:border-blue-500 transition-all font-semibold">
                 </div>
                 <button id="start-btn" class="w-full bg-blue-600 text-white p-4 rounded-xl font-black text-lg hover:bg-blue-700 shadow-lg transition-all transform active:scale-95 uppercase tracking-wide">Iniciar Avaliação</button>
             </div>
         </div>
 
-        <!-- ÁREA PRINCIPAL DA PROVA -->
         <div id="main-content" class="hidden">
-            <!-- Barra de Navegação por Questões -->
             <div class="bg-slate-50 p-3 border-b overflow-x-auto flex justify-center">
                 <div id="navigation-map" class="flex gap-2 py-1 px-2"></div>
             </div>
@@ -63,42 +57,34 @@
                         <span id="q-label" class="bg-blue-600 text-white px-4 py-1.5 rounded-xl font-black text-sm uppercase tracking-wider">Questão 1</span>
                     </div>
                     
-                    <!-- Bloco do Enunciado e Imagem -->
                     <div class="bg-blue-50/60 border-l-8 border-blue-500 p-6 rounded-r-2xl shadow-inner mb-6">
                         <p id="q-text" class="text-lg font-bold text-gray-800 leading-snug mb-4"></p>
-                        <!-- Container Dinâmico Visual -->
                         <div id="q-image" class="hidden justify-center items-center bg-white p-6 rounded-xl border border-gray-200 shadow-sm min-h-[120px] overflow-x-auto"></div>
                     </div>
 
-                    <!-- Grid de Alternativas -->
                     <div id="options-grid" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
                     
-                    <!-- Caixa de Validação -->
                     <div id="confirm-box" class="mt-8 hidden text-center">
                         <button id="confirm-btn" class="bg-orange-500 text-white px-14 py-4 rounded-2xl font-black text-lg hover:bg-orange-600 shadow-xl transition-all transform active:scale-95 tracking-wide">CONFIRMAR RESPOSTA</button>
                     </div>
 
-                    <!-- Mensagem de Feedback Instantâneo -->
                     <div id="feedback" class="mt-6 p-4 rounded-xl hidden font-bold text-center border-2"></div>
                 </div>
 
-                <!-- Botões de Fluxo Inferior -->
                 <div class="flex justify-between mt-12 pt-6 border-t border-gray-200 gap-4">
                     <button id="prev-btn" class="bg-gray-200 text-gray-700 px-6 py-4 rounded-xl font-black shadow hover:bg-gray-300 disabled:opacity-40 transition-all">← ANTERIOR</button>
                     <button id="next-btn" class="bg-blue-600 text-white px-6 py-4 rounded-xl font-black shadow hover:bg-blue-700 transition-all">PRÓXIMA →</button>
                 </div>
                 
-                <!-- Botão Finalizar Oculto até responder a última -->
-                <button id="finish-btn" class="w-full mt-6 bg-emerald-600 text-white p-5 rounded-xl font-black text-xl hidden uppercase shadow-xl hover:bg-emerald-700 transition-all tracking-wide">Finalizar e Gerar Relatório</button>
+                <button id="finish-btn" class="w-full mt-6 bg-emerald-600 text-white p-5 rounded-xl font-black text-xl hidden uppercase shadow-xl hover:bg-emerald-700 transition-all tracking-wide">Finalizar Prova e Enviar Nota</button>
             </div>
         </div>
 
-        <!-- TELA DO RELATÓRIO FINAL E DESEMPENHO -->
         <div id="result-screen" class="hidden p-8 md:p-12">
             <div class="text-center max-w-md mx-auto">
                 <div class="text-6xl mb-4">🔬</div>
                 <h2 class="text-3xl font-black text-gray-800 mb-1">Avaliação Concluída!</h2>
-                <p class="text-gray-500 font-medium mb-6">Confira abaixo o seu rendimento escolar detalhado:</p>
+                <p class="text-amber-600 font-bold mb-6">⚠️ Atenção: Suas respostas foram salvas na planilha do professor!</p>
                 
                 <div id="score-circle" class="w-36 h-36 bg-blue-50 rounded-full flex flex-col items-center justify-center mx-auto mb-6 border-4 border-blue-600 shadow-md">
                     <span id="score-text" class="text-4xl font-black text-blue-700">0/10</span>
@@ -106,124 +92,71 @@
                 </div>
             </div>
 
-            <!-- Tabela de Resumos das Questões no Final -->
             <div class="mt-8 border rounded-xl overflow-hidden bg-white shadow-sm">
-                <div class="bg-gray-50 p-4 border-b font-black text-gray-700 tracking-wide uppercase text-sm">Gabarito detalhado do aluno</div>
+                <div class="bg-gray-50 p-4 border-b font-black text-gray-700 tracking-wide uppercase text-sm">Gabarito detalhado na tela</div>
                 <div id="summary-table" class="divide-y max-h-60 overflow-y-auto"></div>
             </div>
 
-            <!-- Botões de Download de Relatório e Reinício -->
-            <div class="mt-8 flex flex-col sm:flex-row gap-4 justify-center">
-                <button id="pdf-btn" class="bg-blue-700 text-white px-8 py-4 rounded-xl font-black uppercase text-sm tracking-wider shadow-lg hover:bg-blue-800 transition-all">Baixar Relatório Oficial (PDF)</button>
-                <button onclick="location.reload()" class="bg-gray-200 text-gray-700 px-8 py-4 rounded-xl font-black uppercase text-sm tracking-wider shadow hover:bg-gray-300 transition-all">Refazer Teste</button>
+            <div class="mt-8 text-center">
+                <p class="text-sm text-gray-400 font-medium italic">As informações acima sumirão assim que você fechar a aba do navegador.</p>
             </div>
         </div>
     </div>
 
     <script>
-        // BANCO DE DADOS ALINHADO AO SEU GABARITO (10 QUESTÕES) - IMAGEM ATUALIZADA EXATAMENTE CONFORME ENVIADA
+        // COLOQUE O LINK GIGANTE DO SEU GOOGLE APPS SCRIPT AQUI DENTRO DAS ASPAS:
+        const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxQILkUfDArkkhvl7P1pD20DK-utSAr3M7N-mriKibjVn9_8SauKJSCXw_uG8cKd7MNFA/exec";
+
         const quizData = [
             {
-                q: "1. Selecione a alternativa que completa, respectively (em ordem), as frases, corretamente:\n\n• ____________: a água dos mares, dos rios e dos lagos evapora, passando do estado líquido para o gasoso, formando um vapor de água.\n• ____________: nas camadas mais frias da atmosfera, esse vapor de água passa do estado gasoso para o líquido, formando gotículas que compõem as nuvens.\n• As nuvens carregadas com as gotas formam a __________________, ou seja, ao chover, a água volta para a Terra.\n• ____________: ocorre quando a água que se encontra na superfície da Terra retorna aos rios, aos mares ou aos lagos.\n• ____________: acontece quando a água sai das plantas pelas folhas, liberando essa água excedente em vapor de água.",
-                img: `<div class="w-full max-w-2xl mx-auto rounded-xl overflow-hidden shadow-sm">
-                        <img src="image_91b7a8.jpg" alt="Ciclo Hidrológico" class="w-full h-auto object-contain mx-auto" />
-                      </div>`,
-                options: [
-                    "evaporação, condensação, precipitação, infiltração e transpiração", // GABARITO: A
-                    "condensação, precipitação, evaporação, infiltração e transpiração",
-                    "evaporação, precipitação, condensação, transpiração e infiltração",
-                    "precipitação, evaporação, condensação, infiltração e transpiração"
-                ],
+                q: "1. Selecione a alternativa que completa, respectivamente (em ordem), as frases, corretamente:\n\n• ____________: a água dos mares, dos rios e dos lagos evapora, passando do estado líquido para o gasoso, formando um vapor de água.\n• ____________: nas camadas mais frias da atmosfera, esse vapor de água passa do estado gasoso para o líquido, formando gotículas que compõem as nuvens.\n• As nuvens carregadas com as gotas formam a __________________, ou seja, ao chover, a água volta para a Terra.\n• ____________: ocorre quando a água que se encontra na superfície da Terra retorna aos rios, aos mares ou aos lagos.\n• ____________: acontece quando a água sai das plantas pelas folhas, liberando essa água excedente em vapor de água.",
+                img: `<div class="w-full max-w-2xl mx-auto rounded-xl overflow-hidden shadow-sm"><img src="image_91b7a8.jpg" alt="Ciclo" class="w-full h-auto object-contain mx-auto" /></div>`,
+                options: ["evaporação, condensação, precipitação, infiltração e transpiração", "condensação, precipitação, evaporação, infiltração e transpiração", "evaporação, precipitação, condensação, transpiração e infiltração", "precipitação, evaporação, condensação, infiltração e transpiração"],
                 correct: 0
             },
             {
                 q: "2. Leia as frases e marque V para as verdadeiras e F para as falsas, em seguida selecione a sequência correta:\n\n(  ) O maior volume de água do planeta Terra é doce.\n(  ) No estado líquido, a água não tem forma.\n(  ) A porcentagem maior de água doce está localizada nos rios e nos lagos.\n(  ) A maior parte da água presente nos oceanos é doce e própria para o consumo.\n(  ) O ciclo hidrológico é caracterizado pelo movimento contínuo de água entre a atmosfera e a superfície terrestre, em permanente processo de transformação na natureza.",
-                options: [
-                    "V – V – F – F - V",
-                    "F – V – V - V – F",
-                    "F – V – F – F – V", // GABARITO: C
-                    "V – V – F – V – F"
-                ],
+                options: ["V – V – F – F - V", "F – V – V - V – F", "F – V – F – F – V", "V – V – F – V – F"],
                 correct: 2
             },
             {
                 q: "3. É o termo utilizado para definir um grupo de seres que habitam um determinado local, as relações entre eles e a interação dessas comunidades com o ambiente em que vivem.",
-                options: [
-                    "Natureza",
-                    "Habitat",
-                    "Ecossistema", // GABARITO: C
-                    "Biomas"
-                ],
+                options: ["Natureza", "Habitat", "Ecossistema", "Biomas"],
                 correct: 2
             },
             {
-                q: "4. Leia as afirmações a seguir. Marque com V se a afirmação for verdadeira e F se for falsa e em seguida selecione a sequência correta:\n\n(  ) Os mananciais superficiais são fontes de água que ficam localizadas abaixo da terra.\n(  ) Os rios, lagos e represas são fontes de água que estão na superfície.\n(  ) A água dos mananciais subterrâneos pode ser retirada por meio de poços ou fontes.\n(  ) Exemplos de mananciais subterrâneos incluem nascentes, rios e córregos.",
-                options: [
-                    "F – F – V – F",
-                    "V – V – V – F",
-                    "F – V – F – V",
-                    "F – V – V – F" // GABARITO: D
-                ],
+                q: "4. Leia as afirmações a seguir. Marque com V se a affirmation for verdadeira e F se for falsa e em seguida selecione a sequência correta:\n\n(  ) Os mananciais superficiais são fontes de água que ficam localizadas abaixo da terra.\n(  ) Os rios, lagos e represas são fontes de água que estão na superfície.\n(  ) A água dos mananciais subterrâneos pode ser retirada por meio de poços ou fontes.\n(  ) Exemplos de mananciais subterrâneos incluem nascentes, rios e córregos.",
+                options: ["F – F – V – F", "V – V – V – F", "F – V – F – V", "F – V – V – F"],
                 correct: 3
             },
             {
                 q: "5. São exemplos de uso doméstico da água:",
-                options: [
-                    "Beber, tomar banho e cozinhar", // GABARITO: A
-                    "A água é incorporada nos produtos e na limpeza dos espaços.",
-                    "A agricultura depende da irrigação de plantações.",
-                    "A água é também usada como via de transporte, feito por meio de balsas, barcos e navios."
-                ],
+                options: ["Beber, tomar banho e cozinhar", "A água é incorporada nos produtos e na limpeza dos espaços.", "A agricultura depende da irrigação de plantações.", "A água é também usada como via de transporte, feito por meio de balsas, barcos e navios."],
                 correct: 0
             },
             {
                 q: "6. Qual o nome do processo de formação do solo que se dá pela desagregação e/ou desintegração das partículas que formam as rochas?",
-                options: [
-                    "Pesticida",
-                    "Intemperismo", // GABARITO: B
-                    "Lixo urbano",
-                    "Reciclagem"
-                ],
+                options: ["Pesticida", "Intemperismo", "Lixo urbano", "Reciclagem"],
                 correct: 1
             },
             {
                 q: "7. A formação do solo é um processo complexo e gradual que envolve vários fatores naturais que interagem ao longo do tempo e podem variar de acordo com o ambiente e as condições climáticas. Veja o que contribui para a formação do solo:\n\n1. material de origem\n2. clima\n3. organismos vivos\n4. tempo\n5. água",
-                options: [
-                    "Está correto apenas 1 e 2",
-                    "Está correto apenas 1, 2 e 3",
-                    "Está correto 1, 2, 3 e 4",
-                    "Todas estão corretas" // GABARITO: D
-                ],
+                options: ["Está correto apenas 1 e 2", "Está correto apenas 1, 2 e 3", "Está correto 1, 2, 3 e 4", "Todas estão corretas"],
                 correct: 3
             },
             {
                 q: "8. O ____________ é uma das principais fontes de poluição do solo nas cidades. Muitas vezes, os resíduos são descartados de maneira irregular, como em lixões, terrenos baldios ou áreas próximas a rios.",
-                options: [
-                    "Pesticida.",
-                    "Intemperismo.",
-                    "Lixo urbano.", // GABARITO: C
-                    "Reciclagem."
-                ],
+                options: ["Pesticida.", "Intemperismo.", "Lixo urbano.", "Reciclagem."],
                 correct: 2
             },
             {
                 q: "9. O _____________ é a prática de usar a água racionalmente, sem desperdiçar ou contaminar esse recurso vital.",
-                options: [
-                    "consumo consciente", // GABARITO: A
-                    "consumo inconsciente",
-                    "desperdiço",
-                    "vazamento de água"
-                ],
+                options: ["consumo consciente", "consumo inconsciente", "desperdiço", "vazamento de água"],
                 correct: 0
             },
             {
                 q: "10. A poluição do solo pode ser química, física ou biológica, resultante de resíduos sólidos ou líquidos. Essa poluição pode ser causada por uma variedade de fatores, como:\n\n1. atividades industriais\n2. atividades agrícolas\n3. atividades domésticas.",
-                options: [
-                    "Está correto apenas a opção 1",
-                    "Está correto apenas a opção 2",
-                    "Está correto apenas a opção 3",
-                    "Todas as opções estão corretas" // GABARITO: D
-                ],
+                options: ["Está correto apenas a opção 1", "Está correto apenas a opção 2", "Está correto apenas a opção 3", "Todas as opções estão corretas"],
                 correct: 3
             }
         ];
@@ -232,14 +165,12 @@
         let studentAnswers = Array(quizData.length).fill(null);
         let currentSelectedOption = null;
 
-        // Elementos do DOM
         const startBtn = document.getElementById('start-btn');
         const confirmBtn = document.getElementById('confirm-btn');
         const nextBtn = document.getElementById('next-btn');
         const prevBtn = document.getElementById('prev-btn');
         const finishBtn = document.getElementById('finish-btn');
 
-        // Fluxos Básicos de Inicialização
         startBtn.onclick = () => {
             const name = document.getElementById('student-name').value.trim();
             const sClass = document.getElementById('student-class').value.trim();
@@ -261,11 +192,7 @@
                 dot.className = 'nav-dot';
                 dot.innerText = i + 1;
                 dot.id = `dot-${i}`;
-                dot.onclick = () => {
-                    currentQuestion = i;
-                    currentSelectedOption = null;
-                    loadQuestion();
-                };
+                dot.onclick = () => { currentQuestion = i; currentSelectedOption = null; loadQuestion(); };
                 navMap.appendChild(dot);
             });
         }
@@ -277,13 +204,8 @@
             
             const imgContainer = document.getElementById('q-image');
             imgContainer.innerHTML = '';
-            if (data.img) {
-                imgContainer.classList.remove('hidden');
-                imgContainer.classList.add('flex');
-                imgContainer.innerHTML = data.img;
-            } else {
-                imgContainer.className = 'hidden';
-            }
+            if (data.img) { imgContainer.classList.remove('hidden'); imgContainer.classList.add('flex'); imgContainer.innerHTML = data.img; } 
+            else { imgContainer.className = 'hidden'; }
 
             const grid = document.getElementById('options-grid');
             grid.innerHTML = '';
@@ -297,17 +219,11 @@
 
                 if (isAlreadyAnswered) {
                     card.classList.add('locked');
-                    if (i === data.correct) {
-                        card.classList.add('correct');
-                    } else if (i === studentAnswers[currentQuestion]) {
-                        card.classList.add('incorrect');
-                    }
+                    if (i === data.correct) card.classList.add('correct');
+                    else if (i === studentAnswers[currentQuestion]) card.classList.add('incorrect');
                 } else {
                     if (i === currentSelectedOption) card.classList.add('selected-not-confirmed');
-                    card.onclick = () => {
-                        currentSelectedOption = i;
-                        loadQuestion();
-                    };
+                    card.onclick = () => { currentSelectedOption = i; loadQuestion(); };
                 }
                 grid.appendChild(card);
             });
@@ -329,40 +245,45 @@
             finishBtn.classList.toggle('hidden', currentQuestion !== quizData.length - 1 || !allAnswered);
         }
 
-        confirmBtn.onclick = () => {
-            studentAnswers[currentQuestion] = currentSelectedOption;
-            currentSelectedOption = null;
-            loadQuestion();
-        };
-
-        nextBtn.onclick = () => {
-            if (currentQuestion < quizData.length - 1) {
-                currentQuestion++;
-                currentSelectedOption = null;
-                loadQuestion();
-            }
-        };
-
-        prevBtn.onclick = () => {
-            if (currentQuestion > 0) {
-                currentQuestion--;
-                currentSelectedOption = null;
-                loadQuestion();
-            }
-        };
+        confirmBtn.onclick = () => { studentAnswers[currentQuestion] = currentSelectedOption; currentSelectedOption = null; loadQuestion(); };
+        nextBtn.onclick = () => { if (currentQuestion < quizData.length - 1) { currentQuestion++; currentSelectedOption = null; loadQuestion(); } };
+        prevBtn.onclick = () => { if (currentQuestion > 0) { currentQuestion--; currentSelectedOption = null; loadQuestion(); } };
 
         function updateNavigationDotsStyles() {
             quizData.forEach((_, i) => {
                 const dot = document.getElementById(`dot-${i}`);
-                if (dot) {
-                    dot.className = `nav-dot ${i === currentQuestion ? 'active' : ''} ${studentAnswers[i] !== null ? 'answered' : ''}`;
-                }
+                if (dot) dot.className = `nav-dot ${i === currentQuestion ? 'active' : ''} ${studentAnswers[i] !== null ? 'answered' : ''}`;
             });
         }
 
-        finishBtn.onclick = () => {
+        finishBtn.onclick = async () => {
+            finishBtn.disabled = true;
+            finishBtn.innerText = "Enviando dados para o professor... Aguarde.";
+
+            const name = document.getElementById('student-name').value.trim();
+            const sClass = document.getElementById('student-class').value.trim();
             const correctTotal = studentAnswers.filter((ans, i) => ans === quizData[i].correct).length;
             const percent = Math.round((correctTotal / quizData.length) * 100);
+
+            const payload = {
+                nome: name,
+                turma: sClass,
+                acertos: `${correctTotal}/${quizData.length}`,
+                percentual: `${percent}%`
+            };
+
+            if (GOOGLE_SCRIPT_URL !== "SUA_URL_AQUI") {
+                try {
+                    await fetch(GOOGLE_SCRIPT_URL, {
+                        method: 'POST',
+                        mode: 'no-cors',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload)
+                    });
+                } catch (e) {
+                    console.log("Erro de rede ao computar planilha, seguindo fluxo visual.");
+                }
+            }
 
             document.getElementById('main-content').classList.add('hidden');
             document.getElementById('result-screen').classList.remove('hidden');
@@ -376,88 +297,15 @@
             quizData.forEach((data, i) => {
                 const isCorrect = studentAnswers[i] === data.correct;
                 const letterMap = ["A", "B", "C", "D"];
-                
                 const item = document.createElement('div');
                 item.className = "p-4 flex justify-between items-center text-sm font-semibold";
                 item.innerHTML = `
                     <div class="text-gray-700">Questão ${i + 1}</div>
                     <div class="text-gray-500">Sua Resposta: <span class="font-bold">${letterMap[studentAnswers[i]]}</span></div>
-                    <div>
-                        <span class="px-3 py-1 rounded-full text-xs font-black ${isCorrect ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'}">
-                            ${isCorrect ? 'ACERTO' : 'ERRO'}
-                        </span>
-                    </div>
+                    <div><span class="px-3 py-1 rounded-full text-xs font-black ${isCorrect ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'}">${isCorrect ? 'ACERTO' : 'ERRO'}</span></div>
                 `;
                 summaryTable.appendChild(item);
             });
-        };
-
-        document.getElementById('pdf-btn').onclick = () => {
-            const { jsPDF } = window.jspdf;
-            const doc = new jsPDF();
-
-            const name = document.getElementById('student-name').value.toUpperCase();
-            const sClass = document.getElementById('student-class').value.toUpperCase();
-            const correctTotal = studentAnswers.filter((ans, i) => ans === quizData[i].correct).length;
-            const percent = Math.round((correctTotal / quizData.length) * 100);
-
-            doc.setFont("Helvetica", "bold");
-            doc.setFontSize(10);
-            doc.text("SECRETARIA MUNICIPAL DE EDUCAÇÃO DE CAÇAPAVA", 105, 15, { align: "center" });
-            doc.setFontSize(14);
-            doc.text("EMEFTI “PROFª DAPHNE CÉSAR GHIDELLA”", 105, 23, { align: "center" });
-            
-            doc.setLineWidth(0.5);
-            doc.line(15, 28, 195, 28);
-
-            doc.setFontSize(12);
-            doc.text("RELATÓRIO DE DESEMPENHO INDIVIDUAL DO ALUNO", 15, 38);
-
-            doc.setFont("Helvetica", "normal");
-            doc.setFontSize(11);
-            doc.text(`Aluno(a): ${name}`, 15, 48);
-            doc.text(`Turma: ${sClass}`, 15, 55);
-            doc.text(`Componente Curricular: Ciências`, 15, 62);
-            
-            doc.setFont("Helvetica", "bold");
-            doc.text(`Resultado Final: ${correctTotal} acertos de 10 questões (${percent}% de Aproveitamento)`, 15, 72);
-
-            doc.line(15, 77, 195, 77);
-            doc.text("DETALHAMENTO DE RESPOSTAS POR QUESTÃO", 15, 85);
-
-            let posY = 95;
-            doc.setFont("Helvetica", "normal");
-            const letterMap = ["A", "B", "C", "D"];
-
-            quizData.forEach((data, i) => {
-                if (posY > 270) {
-                    doc.addPage();
-                    posY = 20;
-                }
-                const isCorrect = studentAnswers[i] === data.correct;
-                const statusStr = isCorrect ? "[ACERTO]" : "[ERRO]";
-                
-                doc.setFont("Helvetica", "bold");
-                doc.text(`Questão ${i + 1}: ${statusStr}`, 15, posY);
-                doc.setFont("Helvetica", "normal");
-                
-                let textOpt = `Sua Opção ${letterMap[studentAnswers[i]]}) ${data.options[studentAnswers[i]]}`;
-                if (textOpt.length > 85) textOpt = textOpt.substring(0, 82) + "...";
-                
-                doc.text(textOpt, 15, posY + 5);
-                posY += 14;
-            });
-
-            if (posY > 250) {
-                doc.addPage();
-                posY = 30;
-            }
-            posY += 15;
-            doc.line(60, posY, 150, posY);
-            doc.setFontSize(10);
-            doc.text("Assinatura do Responsável / Coordenação Pedagógica", 105, posY + 5, { align: "center" });
-
-            doc.save(`Relatorio_Ciencias_${name.replace(/\s+/g, '_')}.pdf`);
         };
     </script>
 </body>
