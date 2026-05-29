@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Avaliação Digital de Ciências - 5º Ano</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Biblioteca necessária para gerar o PDF localmente -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <style>
         .option-card { cursor: pointer; transition: all 0.2s; border: 2px solid #e5e7eb; border-radius: 12px; padding: 1.2rem; font-weight: 600; font-size: 1.05rem; display: flex; align-items: center; }
@@ -21,6 +22,7 @@
 <body class="bg-slate-100 min-h-screen p-4 font-sans text-gray-900">
     <div class="max-w-4xl mx-auto bg-white rounded-2xl shadow-2xl overflow-hidden border border-gray-200">
         
+        <!-- CABEÇALHO ESCOLAR -->
         <div class="p-4 border-b-2 border-blue-600 flex items-center justify-between bg-white">
             <img src="brasao.png" class="h-16 w-16 object-contain" onerror="this.src='https://via.placeholder.com/60/3b82f6/ffffff?text=BRASÃO'">
             <div class="text-center flex-1 mx-4">
@@ -30,6 +32,7 @@
             <img src="logo.png" class="h-16 w-16 object-contain" onerror="this.src='https://via.placeholder.com/60/3b82f6/ffffff?text=LOGO'">
         </div>
 
+        <!-- TELA DE IDENTIFICAÇÃO -->
         <div id="intro-screen" class="p-12 text-center max-w-xl mx-auto">
             <h1 class="text-3xl font-black mb-2 text-blue-900 uppercase">Avaliação Digital</h1>
             <p class="text-gray-500 mb-8 font-medium">Componente Curricular: Ciências (5º Ano)</p>
@@ -46,6 +49,7 @@
             </div>
         </div>
 
+        <!-- ÁREA DA PROVA -->
         <div id="main-content" class="hidden">
             <div class="bg-slate-50 p-3 border-b overflow-x-auto flex justify-center">
                 <div id="navigation-map" class="flex gap-2 py-1 px-2"></div>
@@ -76,15 +80,16 @@
                     <button id="next-btn" class="bg-blue-600 text-white px-6 py-4 rounded-xl font-black shadow hover:bg-blue-700 transition-all">PRÓXIMA →</button>
                 </div>
                 
-                <button id="finish-btn" class="w-full mt-6 bg-emerald-600 text-white p-5 rounded-xl font-black text-xl hidden uppercase shadow-xl hover:bg-emerald-700 transition-all tracking-wide">Finalizar Prova e Enviar Nota</button>
+                <button id="finish-btn" class="w-full mt-6 bg-emerald-600 text-white p-5 rounded-xl font-black text-xl hidden uppercase shadow-xl hover:bg-emerald-700 transition-all tracking-wide">Finalizar e Gerar PDF da Nota</button>
             </div>
         </div>
 
+        <!-- TELA DE RESULTADOS -->
         <div id="result-screen" class="hidden p-8 md:p-12">
             <div class="text-center max-w-md mx-auto">
-                <div class="text-6xl mb-4">🔬</div>
+                <div class="text-6xl mb-4">📄</div>
                 <h2 class="text-3xl font-black text-gray-800 mb-1">Avaliação Concluída!</h2>
-                <p class="text-amber-600 font-bold mb-6">⚠️ Atenção: Suas respostas foram salvas na planilha do professor!</p>
+                <p class="text-emerald-600 font-bold mb-6">✓ O relatório completo em PDF foi baixado na pasta de Downloads deste computador.</p>
                 
                 <div id="score-circle" class="w-36 h-36 bg-blue-50 rounded-full flex flex-col items-center justify-center mx-auto mb-6 border-4 border-blue-600 shadow-md">
                     <span id="score-text" class="text-4xl font-black text-blue-700">0/10</span>
@@ -98,15 +103,12 @@
             </div>
 
             <div class="mt-8 text-center">
-                <p class="text-sm text-gray-400 font-medium italic">As informações acima sumirão assim que você fechar a aba do navegador.</p>
+                <p class="text-sm text-gray-400 font-medium italic">O arquivo PDF gerado contém todo o histórico de marcações detalhado.</p>
             </div>
         </div>
     </div>
 
     <script>
-        // COLOQUE O LINK GIGANTE DO SEU GOOGLE APPS SCRIPT AQUI DENTRO DAS ASPAS:
-        const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxQILkUfDArkkhvl7P1pD20DK-utSAr3M7N-mriKibjVn9_8SauKJSCXw_uG8cKd7MNFA/exec";
-
         const quizData = [
             {
                 q: "1. Selecione a alternativa que completa, respectivamente (em ordem), as frases, corretamente:\n\n• ____________: a água dos mares, dos rios e dos lagos evapora, passando do estado líquido para o gasoso, formando um vapor de água.\n• ____________: nas camadas mais frias da atmosfera, esse vapor de água passa do estado gasoso para o líquido, formando gotículas que compõem as nuvens.\n• As nuvens carregadas com as gotas formam a __________________, ou seja, ao chover, a água volta para a Terra.\n• ____________: ocorre quando a água que se encontra na superfície da Terra retorna aos rios, aos mares ou aos lagos.\n• ____________: acontece quando a água sai das plantas pelas folhas, liberando essa água excedente em vapor de água.",
@@ -125,7 +127,7 @@
                 correct: 2
             },
             {
-                q: "4. Leia as afirmações a seguir. Marque com V se a affirmation for verdadeira e F se for falsa e em seguida selecione a sequência correta:\n\n(  ) Os mananciais superficiais são fontes de água que ficam localizadas abaixo da terra.\n(  ) Os rios, lagos e represas são fontes de água que estão na superfície.\n(  ) A água dos mananciais subterrâneos pode ser retirada por meio de poços ou fontes.\n(  ) Exemplos de mananciais subterrâneos incluem nascentes, rios e córregos.",
+                q: "4. Leia as afirmações a seguir. Marque com V se a afirmação for verdadeira e F se for falsa e em seguida selecione a sequência correta:\n\n(  ) Os mananciais superficiais são fontes de água que ficam localizadas abaixo da terra.\n(  ) Os rios, lagos e represas são fontes de água que estão na superfície.\n(  ) A água dos mananciais subterrâneos pode ser retirada por meio de poços ou fontes.\n(  ) Exemplos de mananciais subterrâneos incluem nascentes, rios e córregos.",
                 options: ["F – F – V – F", "V – V – V – F", "F – V – F – V", "F – V – V – F"],
                 correct: 3
             },
@@ -256,35 +258,114 @@
             });
         }
 
-        finishBtn.onclick = async () => {
-            finishBtn.disabled = true;
-            finishBtn.innerText = "Enviando dados para o professor... Aguarde.";
+        function gerarPDF(name, sClass, correctTotal, percent) {
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+            const letterMap = ["A", "B", "C", "D"];
+            let y = 20;
 
+            // CABEÇALHO DO PDF
+            doc.setFont("helvetica", "bold");
+            doc.setFontSize(12);
+            doc.text("EMEFTI \"PROFª DAPHNE CÉSAR GHIDELLA\"", 105, y, { align: "center" });
+            y += 6;
+            doc.setFontSize(10);
+            doc.setFont("helvetica", "normal");
+            doc.text("Secretaria Municipal de Educação de Caçapava", 105, y, { align: "center" });
+            y += 10;
+            
+            doc.setLineWidth(0.5);
+            doc.line(15, y, 195, y);
+            y += 10;
+
+            // DADOS DO ALUNO
+            doc.setFont("helvetica", "bold");
+            doc.setFontSize(14);
+            doc.text("RELATÓRIO DE AVALIAÇÃO DIGITAL - CIÊNCIAS", 15, y);
+            y += 10;
+            
+            doc.setFontSize(11);
+            doc.text(`Aluno(a): `, 15, y);
+            doc.setFont("helvetica", "normal");
+            doc.text(`${name.toUpperCase()}`, 35, y);
+            y += 7;
+
+            doc.setFont("helvetica", "bold");
+            doc.text(`Turma: `, 15, y);
+            doc.setFont("helvetica", "normal");
+            doc.text(`${sClass.toUpperCase()}`, 35, y);
+            y += 7;
+
+            doc.setFont("helvetica", "bold");
+            doc.text(`Data/Hora: `, 15, y);
+            doc.setFont("helvetica", "normal");
+            doc.text(`${new Date().toLocaleString('pt-BR')}`, 38, y);
+            y += 10;
+
+            // QUADRO DE NOTA
+            doc.setFillColor(240, 246, 255);
+            doc.rect(15, y, 180, 15, "F");
+            doc.setFont("helvetica", "bold");
+            doc.setFontSize(12);
+            doc.setTextColor(37, 99, 235);
+            doc.text(`DESEMPENHO FINAL: ${correctTotal} / ${quizData.length} acertos (${percent}%)`, 20, y + 10);
+            
+            doc.setTextColor(0, 0, 0); // Reset cor
+            y += 25;
+
+            // TABELA HISTÓRICA DE QUESTÕES
+            doc.setFontSize(12);
+            doc.setFont("helvetica", "bold");
+            doc.text("Histórico de Respostas Detalhado:", 15, y);
+            y += 8;
+
+            doc.setFontSize(10);
+            quizData.forEach((data, i) => {
+                const respondida = studentAnswers[i];
+                const correta = data.correct;
+                const statusStr = (respondida === correta) ? "ACERTO" : "ERRO";
+                
+                doc.setFont("helvetica", "bold");
+                doc.text(`Questão ${i + 1}:`, 15, y);
+                
+                doc.setFont("helvetica", "normal");
+                doc.text(`Marcou: [ ${letterMap[respondida]} ]`, 40, y);
+                doc.text(`Correta: [ ${letterMap[correta]} ]`, 85, y);
+                
+                doc.setFont("helvetica", "bold");
+                if(statusStr === "ACERTO") {
+                    doc.setTextColor(22, 101, 52); // Verde
+                } else {
+                    doc.setTextColor(185, 28, 28); // Vermelho
+                }
+                doc.text(statusStr, 140, y);
+                doc.setTextColor(0, 0, 0); // Reset cor
+
+                y += 8;
+                
+                // Cria nova página se o espaço vertical acabar
+                if (y > 270) {
+                    doc.addPage();
+                    y = 20;
+                }
+            });
+
+            // SALVA O ARQUIVO PDF COM NOME DO ALUNO
+            const nomeArquivo = name.toUpperCase().replace(/\s+/g, '_');
+            const turmaArquivo = sClass.toUpperCase().replace(/\s+/g, '_');
+            doc.save(`Prova_Ciencias_${nomeArquivo}_${turmaArquivo}.pdf`);
+        }
+
+        finishBtn.onclick = () => {
             const name = document.getElementById('student-name').value.trim();
             const sClass = document.getElementById('student-class').value.trim();
             const correctTotal = studentAnswers.filter((ans, i) => ans === quizData[i].correct).length;
             const percent = Math.round((correctTotal / quizData.length) * 100);
 
-            const payload = {
-                nome: name,
-                turma: sClass,
-                acertos: `${correctTotal}/${quizData.length}`,
-                percentual: `${percent}%`
-            };
+            // 1. GERA E BAIXA O ARQUIVO PDF LOCALMENTE
+            gerarPDF(name, sClass, correctTotal, percent);
 
-            if (GOOGLE_SCRIPT_URL !== "SUA_URL_AQUI") {
-                try {
-                    await fetch(GOOGLE_SCRIPT_URL, {
-                        method: 'POST',
-                        mode: 'no-cors',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify(payload)
-                    });
-                } catch (e) {
-                    console.log("Erro de rede ao computar planilha, seguindo fluxo visual.");
-                }
-            }
-
+            // 2. MOSTRA O DESEMPENHO NA TELA
             document.getElementById('main-content').classList.add('hidden');
             document.getElementById('result-screen').classList.remove('hidden');
 
